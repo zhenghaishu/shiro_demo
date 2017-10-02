@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.druid.support.json.JSONUtils;
-import com.z.util.DecriptUtil;
+import com.z.util.EncryptUtil;
 
 @Controller
 public class IndexController {
@@ -70,8 +70,7 @@ public class IndexController {
     	Map<String, Object> result = new HashMap<String, Object>();
     	
     	try{
-    		// it's a test demo, so there is no md5 encrypt for password
-    		UsernamePasswordToken token = new UsernamePasswordToken(username, password);  
+    		UsernamePasswordToken token = new UsernamePasswordToken(username, EncryptUtil.encryptMD5(password));  
             Subject currentUser = SecurityUtils.getSubject();  
             if (!currentUser.isAuthenticated()){
                 token.setRememberMe(true);  

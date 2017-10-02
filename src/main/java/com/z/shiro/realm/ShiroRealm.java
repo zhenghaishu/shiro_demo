@@ -13,10 +13,10 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
-import com.z.util.DecriptUtil;
+import com.z.util.EncryptUtil;
 
 public class ShiroRealm extends AuthorizingRealm {
-	private static final String USER_NAME = "admin";  
+	private static final String USERNAME = "admin";  
 	private static final String PASSWORD = "123456";  
 	
 	@Override
@@ -24,9 +24,8 @@ public class ShiroRealm extends AuthorizingRealm {
 			AuthenticationToken authcToken) throws AuthenticationException {
 		UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
 		
-		if(token.getUsername().equals(USER_NAME)){
-			// it's a test demo, so there is no md5 encrypt for password
-			return new SimpleAuthenticationInfo(USER_NAME, PASSWORD, getName());  
+		if(token.getUsername().equals(USERNAME)){
+			return new SimpleAuthenticationInfo(USERNAME, EncryptUtil.encryptMD5(PASSWORD), getName());  
 		}else{
 			throw new AuthenticationException();  
 		}
